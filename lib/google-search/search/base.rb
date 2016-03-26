@@ -172,10 +172,13 @@ module Google
     
     def get_response
       raw = get_raw
+      l = Logger.new STDOUT
+      l.info "raw #{raw.inspect}"
       hash = Search.json_decode raw
       hash['responseSize'] = size
       response = Response.new hash
       response.raw = raw
+      l.info "response #{response.inspect}"
       @each_response.call response if @each_response
       response
     end
