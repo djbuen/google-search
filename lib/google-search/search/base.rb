@@ -12,7 +12,7 @@ module Google
     # Constants
     #++
     
-    URI = 'https://www.google.com/uds'
+    URI = 'https://www.googleapis.com/customsearch/v1'
     
     #--
     # Exceptions
@@ -121,8 +121,10 @@ module Google
     # Return uri.
     
     def get_uri
-      URI + "/G#{@type}Search?" + 
-        (get_uri_params + options.to_a).
+      #URI + "/G#{@type}Search?" + 
+      URI + "?" + 
+        #(get_uri_params + options.to_a).
+        options.to_a.
           map { |key, value| "#{key}=#{Search.url_encode(value)}" unless value.nil? }.compact.join('&')
     end
     
@@ -152,6 +154,8 @@ module Google
     
     def get_raw
       @sent = true
+      l = Logger.new STDOUT
+      l.info "get uri #{get_uri.inspect}"
       open(get_uri).read
     end
     
