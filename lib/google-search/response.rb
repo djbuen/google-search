@@ -70,6 +70,17 @@ module Google
             items << item_class.new(result)
           end
         end
+        l = Logger.new STDOUT
+        l.info "hash #{@hash}"
+        l.info "hash keys #{@hash.keys}"
+        l.info " valid? #{valid?}"
+        @hash['items'].each_with_index do |result, i|
+            l.info "result #{result['kind']}"
+            item_class = Google::Search::Item.class_for result['kind']
+            result['index'] = i + Google::Search.size_for(size) * page
+            items << item_class.new(result)
+        end
+
       end
       
       ##

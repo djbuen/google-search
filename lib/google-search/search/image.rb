@@ -81,9 +81,9 @@ module Google
         validate(:file_type) { |ext| ext.nil? || EXTENSIONS.include?(ext) }
         super + [
           [:safe, safety_level],
-          [:imgsz, image_size.is_a?(Array) ? image_size.join('|') : image_size],
+          [:imgSize, image_size.is_a?(Array) ? image_size.join('|') : image_size],
           [:imgcolor, color],
-          [:imgtype, image_type],
+          [:imgType, image_type],
           [:as_filetype, file_type],
           [:as_sitesearch, uri]
           ]

@@ -49,9 +49,13 @@ module Google
       def initialize hash
         @index = hash['index']
         @title = hash['titleNoFormatting'] || hash['title']
-        @uri = hash['unescapedUrl'] || hash['url'] || hash['postUrl']
+               
+        if hash['pagemap'] && hash['pagemap']['cse_thumbnail']
+            @uri = hash['pagemap']['cse_image'].first['src']
+            @uri = hash['pagemap']['cse_thumbnail'].last['src']
+            @thumbnail_uri = hash['tbUrl']
+        end
         @content = hash['contentNoFormatting'] || hash['content']
-        @thumbnail_uri = hash['tbUrl']
         @thumbnail_width = hash['tbWidth'].to_i
         @thumbnail_height = hash['tbHeight'].to_i
         @visible_uri = hash['visibleUrl']
@@ -66,7 +70,7 @@ module Google
         when 'GwebSearch'    ; Web
         when 'GlocalSearch'  ; Local
         when 'GbookSearch'   ; Book
-        when 'GimageSearch'  ; Image
+        when 'GimageSearch', 'customsearch#search', 'customsearch#result'; Image
         when 'GvideoSearch'  ; Video
         when 'GpatentSearch' ; Patent
         when 'GnewsSearch'   ; News

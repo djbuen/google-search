@@ -102,10 +102,10 @@ module Google
     
     def each_item &block
       response = self.next.response
-      if response.valid?
+      #if response.valid?
         response.each { |item| yield item }
-        each_item &block
-      end
+        #each_item &block
+      #end
     end
     alias :each :each_item
     
